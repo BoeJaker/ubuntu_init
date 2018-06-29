@@ -34,7 +34,7 @@ done
 # rclone sync $GIT_MNT gdrivejbaker:Workspace/GitRepos -vu --drive-use-trash --copy-links
 #rclone mkdir "$RCLONE_MNT:Workspace/bin"
 #rclone sync $GIT_MNT gdrivejbaker:Workspace/bin -vu --drive-use-trash --copy-links
-#
+
 #
 # Locate USB Storage
 # for i in $(find $USB_MNT )
