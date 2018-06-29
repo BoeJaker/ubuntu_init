@@ -20,16 +20,15 @@ echo "$repos"
 
 # Fetch Updates
 for i in $repos ; do
-	cd "$i"
-	git fetch origin master
+	cd "$i" ; git fetch origin master
 done
 
 # Atomic automatic push file changes within GIT_MNT
 for i in $repos ; do
-		(inotifywait -r -e CLOSE_WRITE --format="cd %w ; git commit -m 'autocommit on change' %w%f" $i | sh )  & &&
+		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f ; cd $PWD" $i | sh )  &
 	echo "started Git atomic commits for $i"
 done
-
+#
 # Archive repos on gdrive
 # rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
 # rclone sync $GIT_MNT gdrivejbaker:Workspace/GitRepos -vu --drive-use-trash --copy-links
