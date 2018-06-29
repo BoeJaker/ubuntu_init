@@ -10,7 +10,7 @@ repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
 CWD=$PWD # Save the current working directory
 for i in $repos ; do
 	cd $i
-	ssh-keygen -t rsa -b 4096 -C "j.baker.cwp@gmail.com"
+	ssh-keygen -t rsa -b 4096 -f ./key -C "j.baker.cwp@gmail.com"
 done
 cd $CWD # Return to the previous directory
 
