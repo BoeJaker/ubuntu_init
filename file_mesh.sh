@@ -34,7 +34,7 @@ done
 rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
 rclone sync "$GIT_MNT" "$RCLONE_MNT:Workspace/GitRepos" -vu --drive-use-trash --copy-links
 #rclone mkdir "$RCLONE_MNT:Workspace/bin"
-#rclone sync $GIT_MNT gdrivejbaker:Workspace/bin -vu --drive-use-trash --copy-links
+#rclone sync $BIN gdrivejbaker:Workspace/bin -vu --drive-use-trash --copy-links
 #
 #
 
