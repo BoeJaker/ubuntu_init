@@ -4,26 +4,37 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Get settings constants from the conf file 
 source $DIR/file_mesh.conf
 
+# Locate Initialized Repos
+repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
+
+CWD=$PWD # Save the current working directory
+for i in $repos ; do
+	cd $i
+	ssh-keygen -t rsa -b 4096 -C "j.baker.cwp@gmail.com"
+done
+cd $CWD # Return to the previous directory
+
 # TODO # Pre run checks, instance restriction, dependancy checks
 (
 	while true ; do
 		# Check for new repos and clone all of GITHUB_USER
-		CWD=$PWD
+		CWD=$PWD # Save the current working directory
 		cd $GIT_MNT # Chage to the Git repo directory
 		curl -s https://api.github.com/users/$GITHUB_USER/repos | grep \"clone_url\" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g' | xargs -n1 -i git clone {} 2>/dev/null 
 		# Clone all gists
 		cd $CWD # Return to the previous directory
+		wait
 
 		# Locate Initialized Repos
 		repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
-		echo "$repos"
 
 		# Fetch Updates
 		for i in $repos ; do
 			cd "$i" ; git pull origin master
 		done
-		
+		wait 
 	done
+	sleep 60*10 # Update every 10 minutes
 ) &
 
 # Atomic automatic push file changes within GIT_MNT
