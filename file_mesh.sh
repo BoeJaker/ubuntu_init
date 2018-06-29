@@ -25,7 +25,7 @@ done
 
 # Atomic automatic push file changes within GIT_MNT
 for i in $repos ; do
-		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f && rm ./index.lock ; cd $PWD ; pkill $p " $i | sh )  &
+		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f && rm ./index.lock ; cd $PWD ;" $i | sh )  &
 	echo "started Git atomic commits for $i"
 done
 #
