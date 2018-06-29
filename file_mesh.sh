@@ -13,7 +13,6 @@ source $DIR/file_mesh.conf
 		curl -s https://api.github.com/users/$GITHUB_USER/repos | grep \"clone_url\" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g' | xargs -n1 -i git clone {} 2>/dev/null 
 		# Clone all gists
 		cd $CWD # Return to the previous directory
-		wait
 
 		# Locate Initialized Repos
 		repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
@@ -23,7 +22,7 @@ source $DIR/file_mesh.conf
 		for i in $repos ; do
 			cd "$i" ; git pull origin master
 		done
-		wait 
+		
 	done
 ) &
 
