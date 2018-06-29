@@ -25,17 +25,17 @@ done
 
 # Atomic automatic push file changes within GIT_MNT
 for i in $repos ; do
-		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f ; cd $PWD" $i | sh )  &
+		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f ; cd $PWD ; pkill -f 'git commit' ;" $i | sh )  &
 	echo "started Git atomic commits for $i"
 done
-
+#
 # Archive repos on gdrive
 # rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
 # rclone sync $GIT_MNT gdrivejbaker:Workspace/GitRepos -vu --drive-use-trash --copy-links
 #rclone mkdir "$RCLONE_MNT:Workspace/bin"
 #rclone sync $GIT_MNT gdrivejbaker:Workspace/bin -vu --drive-use-trash --copy-links
-
-
+#
+#
 # Locate USB Storage
 # for i in $(find $USB_MNT )
 
