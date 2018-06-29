@@ -34,8 +34,8 @@ cd $CWD # Return to the previous directory
 			cd "$i" ; git pull origin master
 		done
 		wait 
+		sleep 600 # Update every 10 minutes
 	done
-	sleep 600 # Update every 10 minutes
 ) &
 
 # Atomic automatic push file changes within GIT_MNT
