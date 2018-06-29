@@ -35,7 +35,7 @@ cd $CWD # Return to the previous directory
 		done
 		wait 
 	done
-	sleep 60*10 # Update every 10 minutes
+	sleep $((60*10)) # Update every 10 minutes
 ) &
 
 # Atomic automatic push file changes within GIT_MNT
