@@ -28,7 +28,7 @@ for i in $repos ; do
 		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f ; cd $PWD" $i | sh )  &
 	echo "started Git atomic commits for $i"
 done
-#
+
 # Archive repos on gdrive
 # rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
 # rclone sync $GIT_MNT gdrivejbaker:Workspace/GitRepos -vu --drive-use-trash --copy-links
