@@ -6,7 +6,7 @@ source $DIR/file_mesh.conf
 
 # TODO # Pre run checks, instance restriction, dependancy checks
 (
-	while ; do
+	while true ; do
 		# Check for new repos and clone all of GITHUB_USER
 		CWD=$PWD
 		cd $GIT_MNT # Chage to the Git repo directory
