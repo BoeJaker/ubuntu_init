@@ -20,7 +20,7 @@ echo "$repos"
 
 # Fetch Updates
 for i in $repos ; do
-	cd "$i" ; git fetch origin master
+	cd "$i" ; git pull origin master
 done
 
 # Atomic automatic push file changes within GIT_MNT
