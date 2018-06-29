@@ -5,24 +5,27 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $DIR/file_mesh.conf
 
 # TODO # Pre run checks, instance restriction, dependancy checks
+(
+	while ; do
+		# Check for new repos and clone all of GITHUB_USER
+		CWD=$PWD
+		cd $GIT_MNT # Chage to the Git repo directory
+		curl -s https://api.github.com/users/$GITHUB_USER/repos | grep \"clone_url\" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g' | xargs -n1 -i git clone {} 2>/dev/null 
+		# Clone all gists
+		cd $CWD # Return to the previous directory
+		wait
 
-# Check for new repos and clone all of GITHUB_USER
-CWD=$PWD
-cd $GIT_MNT # Chage to the Git repo directory
-curl -s https://api.github.com/users/$GITHUB_USER/repos | grep \"clone_url\" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g' | xargs -n1 -i git clone {} 2>/dev/null 
-# Clone all gists
-cd $CWD # Return to the previous directory
-wait
+		# Locate Initialized Repos
+		repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
+		echo "$repos"
 
-# Locate Initialized Repos
-repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
-echo "$repos"
-
-# Fetch Updates
-for i in $repos ; do
-	cd "$i" ; git pull origin master
-done
-wait
+		# Fetch Updates
+		for i in $repos ; do
+			cd "$i" ; git pull origin master
+		done
+		wait 
+	done
+) &
 
 # Atomic automatic push file changes within GIT_MNT
 # TODO # Add GUI to input commit message
@@ -33,7 +36,7 @@ done
 #
 # Archive repos on gdrive
 rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
-rclone sync "$GIT_MNT" "$RCLONE_MNT:Workspace/GitRepos" -vu --drive-use-trash --copy-links
+rclone sync "$GIT_MNT" "$RCLONE_MNT:Workspace/GitRepos" -vu --drive-use-trash --copy-links &
 #rclone mkdir "$RCLONE_MNT:Workspace/bin"
 #rclone sync $BIN gdrivejbaker:Workspace/bin -vu --drive-use-trash --copy-links
 #
