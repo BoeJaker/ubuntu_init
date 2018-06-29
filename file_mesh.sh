@@ -22,12 +22,14 @@ echo "$repos"
 for i in $repos ; do
 	cd "$i" ; git pull origin master
 done
+wait
 
 # Atomic automatic push file changes within GIT_MNT
 for i in $repos ; do
 		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'autocommit on change' %w%f && rm ./.git/index.lock ; cd $PWD ;" $i | sh )  &
 	echo "started Git atomic commits for $i"
 done
+
 #
 # Archive repos on gdrive
 # rclone mkdir "$RCLONE_MNT:Workspace/GitRepos"
