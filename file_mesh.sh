@@ -34,7 +34,7 @@ cd $CWD # Return to the previous directory
 			cd "$i" ; git pull origin master
 		done
 		wait 
-		sleep 600 # Update every 10 minutes
+		sleep $((60*10)) # Update every 10 minutes
 	done
 ) &
 
