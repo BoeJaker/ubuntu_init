@@ -14,6 +14,7 @@ for i in $repos ; do
 	ssh-keygen -t rsa -b 4096 -f ./key -C "j.baker.cwp@gmail.com"
 done
 cd $CWD # Return to the previous directory
+
 # Atomic automatic push file changes within GIT_MNT
 # TODO # Add GUI to input commit message
 for i in $repos ; do
