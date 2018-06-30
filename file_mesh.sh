@@ -35,7 +35,7 @@ done
 		# Locate Initialized Repos
 		repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
 
-		# Fetch Updates
+		# Pull Repo Updates
 		for i in $repos ; do
 			cd "$i" ; git pull origin master
 		done
