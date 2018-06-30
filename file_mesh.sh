@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Get settings constants from the conf file 
 source $DIR/file_mesh.conf
-
+exec ./file_mesh_dependancies.sh
 # Locate Initialized Repos
 repos=$(find $GIT_MNT -name '.git' -printf '%h\n')
 
