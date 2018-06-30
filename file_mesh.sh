@@ -14,6 +14,11 @@ for i in $repos ; do
 	ssh-keygen -t rsa -b 4096 -f ./key -C "j.baker.cwp@gmail.com"
 done
 cd $CWD # Return to the previous directory
+# Atomic automatic push file changes within GIT_MNT
+# TODO # Add GUI to input commit message
+for i in $repos ; do
+		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'atomic on change' %w%f && rm ./.git/index.lock ; cd $PWD ;" $i 2>/dev/null )  &
+done
 
 # TODO # Pre run checks, instance restriction, dependancy checks
 (
@@ -37,12 +42,6 @@ cd $CWD # Return to the previous directory
 		sleep $((60*10)) # Update every 10 minutes
 	done
 ) &
-
-# Atomic automatic push file changes within GIT_MNT
-# TODO # Add GUI to input commit message
-for i in $repos ; do
-		(inotifywait -mr -e CLOSE_WRITE --format="CWD=$PWD ; cd %w ; git commit -m 'atomic on change' %w%f && rm ./.git/index.lock ; cd $PWD ;" $i 2>/dev/null )  &
-done
 
 #
 # Archive repos on gdrive
